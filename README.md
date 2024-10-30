@@ -58,8 +58,3 @@ This **YouTube Clone** project is my capstone, built using the **MERN Stack** (M
 
 
 
-### Installation
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/youtube-clone.git
-   cd youtube-clone     (modify and update )
