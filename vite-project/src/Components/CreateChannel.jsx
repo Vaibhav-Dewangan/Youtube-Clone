@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Ensure axios is installed and imported
+import axios from 'axios';
 
 const CreateChannel = ({ isOpen, onClose, userId }) => {
     const [formData, setFormData] = useState({
         channelName: '',
         description: '',
         profilePicture: '',
-        bannerImage:'',
+        bannerImage: '',
     });
     const [imagePreview, setImagePreview] = useState(null);
     const [error, setError] = useState('');
@@ -17,7 +17,7 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
 
-        // Update image preview if the input is the profile picture URL
+        // Update image preview 
         if (name === 'profilePicture') {
             setImagePreview(value);
         }
@@ -29,21 +29,18 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
 
         // Create a payload object
         const payload = {
-            userId: userId, // Include userId in the payload
+            userId: userId,
             channelName: formData.channelName,
             description: formData.description,
-            profilePicture: formData.profilePicture, // Directly using the URL
+            profilePicture: formData.profilePicture, // using the URL
             bannerImage: formData.bannerImage,
         };
-
-        // Log payload for debugging
-        console.log("Payload:", payload);
 
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post('http://localhost:5200/api/channel/create', payload, {
                 headers: {
-                    'Content-Type': 'application/json', // Set content type to application/json
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             });
@@ -51,7 +48,7 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
             setSuccess('Channel created successfully!');
             setError('');
             // Reset form data
-            setFormData({ channelName: '', description: '', profilePicture: '' });
+            setFormData({ channelName: '', description: '', profilePicture: '', bannerImage: '' });
             setImagePreview(null);
             onClose(); // Close modal
         } catch (err) {
@@ -68,8 +65,6 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
     }
 
     if (!isOpen) return null; // Don't render if not open
-
-    console.log(userId);
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">

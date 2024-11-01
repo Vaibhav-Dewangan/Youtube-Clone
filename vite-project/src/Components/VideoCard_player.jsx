@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faThumbsDown, faShare, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function VideoCardPlayer({ videoId, videoDetails, channelId }) {
     const [channel, setChannel] = useState(null);
@@ -25,6 +23,7 @@ function VideoCardPlayer({ videoId, videoDetails, channelId }) {
         }
     };
 
+    // Calculate time ago
     const calculateTimeAgo = () => {
         const now = new Date();
         const upload = new Date(uploadDate);

@@ -74,7 +74,7 @@ function FilterTabPage() {
                     )
                     )}
                 </div>
-                
+
                 {/* Shorts */}
                 <li className="flex gap-2 items-center p-3 mt-5">
                     <img className="h-5 md:h-6 " src={shortsIcon} alt="shorts" />

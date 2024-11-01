@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../Context/UserAuth.jsx';
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function LoginResister() {
-    const { login , islogin } = useAuth(); // Get login function from context
+    const { login, islogin } = useAuth(); // Get login function from context
     const [newUser, setNewUser] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -46,6 +46,7 @@ function LoginResister() {
                 } else {
                     login(data.token);
                     localStorage.setItem('email', formData.email); // Store email in localStorage
+                    localStorage.setItem('username', formData.username); // Store username in localStorage
                     navigate('/');
                 }
             } else {

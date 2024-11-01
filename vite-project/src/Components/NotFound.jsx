@@ -3,7 +3,7 @@ import { useRouteError } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function NotFound() {
-  const error = useRouteError(); 
+  const error = useRouteError();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-center">
@@ -22,7 +22,7 @@ function NotFound() {
         Please check the URL or go back to the homepage.
       </p>
 
-      <Link to ="/" className="mt-4 text-blue-500 underline">
+      <Link to="/" className="mt-4 text-blue-500 underline">
         Go to Home
       </Link>
     </div>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import VideoCard from './VideoCard';
 import ShortsCard from './ShortsCard';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const ChannelPage = () => {
-    const {id: channelId} = useParams();
+    const { id: channelId } = useParams();
     const [channel, setChannel] = useState(null);
     const [videos, setVideos] = useState([]);
     const [shorts, setShorts] = useState([]);
@@ -91,8 +89,8 @@ const ChannelPage = () => {
                             <h3 className="text-lg lg:text-2xl font-semibold">{channel?.channelName || 'Channel Name'}</h3>
                             <p className="text-gray-600">{channel?.subscriberCount || '0'} Subscribers</p>
                             <div className='flex flex-row gap-1 items-center text-xs md:text-sm max-sm:hidden'>
-                            <p className=' text-nowrap overflow-hidden w-52 md:w-60 lg:w-96 '>{channel?.description} ...more</p>
-                           
+                                <p className=' text-nowrap overflow-hidden w-52 md:w-60 lg:w-96 '>{channel?.description} ...more</p>
+
                             </div>
                         </div>
                     </div>

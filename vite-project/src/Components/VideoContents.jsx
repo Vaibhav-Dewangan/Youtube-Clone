@@ -29,11 +29,11 @@ function VideoContents() {
         try {
             const response = await axios.get(url_to_getAll_Videos);
             const shuffledVideos = shuffleVideos(response.data); // Shuffle the fetched videos
-            setVideos(shuffledVideos); // Store shuffled videos in state
+            setVideos(shuffledVideos);
             console.log(response.data);
             setErrorMsg(''); // Clear any previous error messages
         } catch (error) {
-            setErrorMsg('Failed to load videos.'); // Set error message
+            setErrorMsg('Failed to load videos.');
         } finally {
             setIsLoading(false); // Loading is finished
         }
@@ -46,9 +46,9 @@ function VideoContents() {
             const shuffledShorts = shuffleShorts(response.data);
             setShorts(shuffledShorts);
             console.log(response.data);
-            setErrorMsg(''); // Clear any previous error messages
+            setErrorMsg('');
         } catch (error) {
-            setErrorMsg('Failed to load videos.'); // Set error message
+            setErrorMsg('Failed to load videos.');
         } finally {
             setIsLoading(false); // Loading is finished
         }
@@ -90,8 +90,8 @@ function VideoContents() {
         };
     }, [videos]);
 
-     // Filter out videos already in videoSection_top
-     const remainingVideos = videos.filter(video => !videoSection_top.some(topVideo => topVideo._id === video._id));
+    // Filter out videos already in videoSection_top
+    const remainingVideos = videos.filter(video => !videoSection_top.some(topVideo => topVideo._id === video._id));
 
     return (
         <>

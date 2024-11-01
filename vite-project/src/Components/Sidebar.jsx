@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import { faHome, faFilm, faBell, faUser, faUserCircle, faHistory, faList, faVideo, faClock, faThumbsUp, faStar, faTachometerAlt, faMusic, faChild, faCog, faFlag, faQuestionCircle, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faHome, faFilm, faBell, faUserCircle, faHistory, faList, faVideo, faClock, faThumbsUp, faStar, faTachometerAlt, faMusic, faChild, faCog, faFlag, faQuestionCircle, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+
 
 function Sidebar(props) {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ function Sidebar(props) {
     // Navigate to home and close the sidebar
     function handleHomeClick() {
         navigate("/"); // Navigate to home
-        props.onClose(); // Call a function from the parent to close the sidebar
+        props.onClose(); // Call a function to close the sidebar
     }
 
     return (
@@ -34,7 +34,7 @@ function Sidebar(props) {
             <div className="space-y-2">
                 <h2 className="text-lg font-bold">You</h2>
                 <ul className="space-y-1">
-                    <li className={listCss}><FontAwesomeIcon icon={faUserCircle} /><a href="#">Your channel</a></li>
+                    <Link to='/account' onClick={props.onClose}><li className={listCss}><FontAwesomeIcon icon={faUserCircle} />Your Account</li></Link>
                     <li className={listCss}><FontAwesomeIcon icon={faHistory} /><a href="#">History</a></li>
                     <li className={listCss}><FontAwesomeIcon icon={faList} /><a href="#">Playlists</a></li>
                     <li className={listCss}><FontAwesomeIcon icon={faVideo} /><a href="#">Your videos</a></li>

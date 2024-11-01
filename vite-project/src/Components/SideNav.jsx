@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faHouse, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHouse } from '@fortawesome/free-solid-svg-icons';
 import subscriptionImg from '../Images/subscription-icon.webp';
 import shortsIcon from '../Images/shorts-icon.webp';
 
 
 function SideNav() {
-     // Scroll to the top when VideoCard is clicked
-     const handleClick = () => {
+    // Scroll to the top when VideoCard is clicked
+    const handleClick = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-   
+
     return (
         <>
             <div className="sideNav_container z-30  bg-white fixed max-sm:hidden sm:pl-6 md:pl-8 sm:top-14 md:top-16 xl:top-20 sm:left-0 h-14 sm:h-screen md:w-20 sm:w-16 w-screen px-4 py-3 max-sm:border-t ">

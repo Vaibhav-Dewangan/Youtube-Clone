@@ -3,10 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { React, lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
-import Body from './Components/Body.jsx';
 import NotFound from './Components/NotFound.jsx';
 import './index.css';
 import loadingGif from './Images/loading.gif';
+import VideoContents from './Components/VideoContents.jsx';
 
 //component with lazy loading
 const SearchComponent = lazy(() => import('./Components/SearchComponent.jsx'));
@@ -25,7 +25,7 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Body />
+        element: <VideoContents />
       },
       {
         path: "/login",

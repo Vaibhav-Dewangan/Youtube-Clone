@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from '../Context/UserAuth.jsx';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCommentDots, faShare, faUserSecret, faQuestionCircle, faClock, faStar, faFilm, faDownload } from '@fortawesome/free-solid-svg-icons';
-import { faGoogle, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { useNavigate } from "react-router-dom";
+import { faUser, faShare, faUserSecret, faQuestionCircle, faClock, faStar, faFilm, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 import CreateChannel from "./CreateChannel.jsx";
-import VideoCard from "./VideoCard.jsx"; // Assuming VideoCard is in the same directory
+import VideoCard from "./VideoCard.jsx";
 
 function UserAccount() {
     const { isLogin, logout } = useAuth();
@@ -23,28 +22,28 @@ function UserAccount() {
     const url_to_getAll_Videos = "http://localhost:5200/api/videos/getAll";
     const updateAvatar_Url = "http://localhost:5200/api/user/update/avatar";
     const [channelId, setChannelId] = useState("");
-    const [isEditingAvatar ,setIsEditingAvatar] = useState(false);
+    const [isEditingAvatar, setIsEditingAvatar] = useState(false);
     const [newAvatar, setNewAvatar] = useState("");
 
-    
-    
+
+
     // Update avatar
-    const updateAvatar = async ()=>{
+    const updateAvatar = async () => {
         setIsLoading(true);
-        try{
+        try {
             const token = localStorage.getItem('token');
-            await axios.put(updateAvatar_Url,{
+            await axios.put(updateAvatar_Url, {
                 userId: userData._id,
                 avatar: newAvatar,
-            },{
-                headers:{
+            }, {
+                headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, 
+                    'Authorization': `Bearer ${token}`,
                 }
             });
-            setUserData((prevData)=>({...prevData, avatar: newAvatar}));
+            setUserData((prevData) => ({ ...prevData, avatar: newAvatar }));
             setIsEditingAvatar(false);
-        }  catch (error) {
+        } catch (error) {
             console.error("Error updating avatar:", error.message);
             setError(error.message || 'Network error');
         } finally {
@@ -65,7 +64,7 @@ function UserAccount() {
                 },
             });
             setData(response.data);
-            setChannelId(response.data.channels[0]?.channelId );
+            setChannelId(response.data.channels[0]?.channelId);
 
         } catch (error) {
             console.error("Network error getting data:", error.message);
@@ -113,7 +112,7 @@ function UserAccount() {
     const renderVideoCards = (videoList) => {
         return videoList.length > 0 ? (
             videoList.map((video) => (
-                <VideoCard key={video._id} videoId={video.videoId} channelId={video.channelId} videoDetails={video}  />
+                <VideoCard key={video._id} videoId={video.videoId} channelId={video.channelId} videoDetails={video} />
             ))
         ) : (
             <p>No videos found.</p>
@@ -137,7 +136,7 @@ function UserAccount() {
                 <div className="flex flex-col justify-center space-y-5 p-4">
                     {/* User Data */}
                     <div className="profile flex justify-start items-center align-middle gap-8 lg:gap-12">
-                        <div onClick={()=> setIsEditingAvatar(true) } style={{ backgroundImage: `url(${userData?.avatar})` }} className={`profile-pic hover:cursor-pointer bg-center bg-contain  border-2 overflow-hidden bg-slate-600 h-16 w-16 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 rounded-full`}>
+                        <div onClick={() => setIsEditingAvatar(true)} style={{ backgroundImage: `url(${userData?.avatar})` }} className={`profile-pic hover:cursor-pointer bg-center bg-contain  border-2 overflow-hidden bg-slate-600 h-16 w-16 sm:h-24 sm:w-24 md:h-28 md:w-28 lg:h-36 lg:w-36 rounded-full`}>
 
                             <p className={`flex justify-center text-center md:text-sm hover:text-white mt-11 sm:mt-16 pb-8 md:mt-20 lg:mt-28 text-xs bg-white bg-opacity-40`}>Edit</p>
 
@@ -191,12 +190,12 @@ function UserAccount() {
 
                     {isEditingAvatar && (
                         <div className="avatar-edit">
-                            <input 
-                            type="text"
-                            placeholder="Enter new avatar URL"
-                            value={newAvatar}
-                            onChange={(e)=> setNewAvatar(e.target.value)}
-                            className="p-1 sm:p-2 border rounded" />
+                            <input
+                                type="text"
+                                placeholder="Enter new avatar URL"
+                                value={newAvatar}
+                                onChange={(e) => setNewAvatar(e.target.value)}
+                                className="p-1 sm:p-2 border rounded" />
 
                             <button onClick={updateAvatar} className="bg-blue-500 text-white rounded p-1 sm:p-2 ml-2 ">Update</button>
 

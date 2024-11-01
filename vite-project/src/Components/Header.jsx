@@ -25,15 +25,15 @@ function Header() {
 
     function handleSearch(e) {
         const input = e.target.value;
-    
+
         if (input !== "") {
             // Navigate to search 
             navigate(`/search/${input}`);
         } else {
             // Clear any existing timeout 
             clearTimeout(searchTimeout);
-            
-            // Set a timeout to change `isSearching` to false after 3 seconds
+
+            // Set a timeout to change `isSearching` to false after 2 seconds
             searchTimeout = setTimeout(() => {
                 setIsSearching(false);
             }, 2000);
