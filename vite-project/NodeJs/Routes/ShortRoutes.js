@@ -1,10 +1,11 @@
 import express from 'express';
-import { addShort, getAllShorts, getShortsByChannelId, getShortsByCategory,getShortById } from '../Controller/Short_controller.js';
+import { addShort, getAllShorts, getShortsByChannelId, getShortsByCategory, getShortById } from '../Controller/Short_controller.js';
+import verifyJWT from '../Middleware/VerifyJWT.js';
 
 const router = express.Router();
 
 // POST route to add a new short
-router.post('/add-short', addShort);
+router.post('/add-short', verifyJWT, addShort);
 
 // Route for getting all shorts
 router.get('/getAll', getAllShorts);

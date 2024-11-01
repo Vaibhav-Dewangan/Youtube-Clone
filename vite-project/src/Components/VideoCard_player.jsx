@@ -13,6 +13,7 @@ function VideoCardPlayer({ videoId, videoDetails, channelId }) {
     const getChannelData_URL = `http://localhost:5200/api/channel/data/${channelId}`;
     const iframeURL = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
 
+
     const fetchChannel = async () => {
         try {
             const response = await axios.get(getChannelData_URL);
@@ -67,48 +68,6 @@ function VideoCardPlayer({ videoId, videoDetails, channelId }) {
                         <span>{videoDetails.views} views</span>
                         <span>•</span>
                         <span>{timeAgo}</span>
-                    </div>
-                </div>
-
-                <div className="flex justify-between items-center bg-slate-50 p-2 lg:py-5">
-                    <Link to={`/channel/${channelId}`} className="flex flex-row items-center">
-                        {channel ? (
-                            <>
-                                <img
-                                    className="bg-gray-600 w-10 h-10 object-cover rounded-full mr-2"
-                                    src={channel.profilePicture}
-                                    alt="Channel Logo"
-                                />
-                                <p className="text-sm lg:text-lg font-semibold">{videoDetails.channelName}</p>
-                            </>
-                        ) : (
-                            <div className="bg-gray-400 w-9 h-9 rounded-full animate-pulse" />
-                        )}
-                    </Link>
-
-                    {channel && (
-                        <button className="bg-black text-white py-1 px-3 rounded-full">Subscribe</button>
-                    )}
-                </div>
-
-                <div className="flex justify-between overflow-x-auto pb-2 items-center mt-2">
-                    <div className="flex gap-6 lg:gap-14 ">
-                        <button className="flex items-center rounded-full bg-slate-50 p-1 px-2 gap-1 text-gray-600 hover:text-blue-500">
-                            <FontAwesomeIcon icon={faThumbsUp} />
-                            <span>{videoDetails.likes}</span>
-                        </button>
-                        <button className="flex items-center rounded-full bg-slate-50 p-1 px-2 gap-1 text-gray-600 hover:text-blue-500">
-                            <FontAwesomeIcon icon={faThumbsDown} />
-                            <span>{videoDetails.dislikes}</span>
-                        </button>
-                        <button className="flex items-center rounded-full bg-slate-50 p-1 px-2 gap-1 text-gray-600 hover:text-blue-500">
-                            <FontAwesomeIcon icon={faShare} />
-                            <span>Share</span>
-                        </button>
-                        <button className="flex items-center rounded-full bg-slate-50 p-1 px-2 gap-1 text-gray-600 hover:text-blue-500">
-                            <FontAwesomeIcon icon={faHeart} />
-                            <span>Thanks</span>
-                        </button>
                     </div>
                 </div>
             </div>

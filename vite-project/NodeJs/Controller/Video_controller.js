@@ -136,7 +136,7 @@ export const getVideosByCategory = async (req, res) => {
   }
 };
 
-// Get videos by title with case-insensitive partial matching
+// Get videos by title with case-insensitive and partial matching
 export const getVideosByTitle = async (req, res) => {
   const title = req.params.title;
   try {
@@ -159,12 +159,12 @@ export const getVideosByTitle = async (req, res) => {
 
 // Add a comment
 export const addComment = async (req, res) => {
-  const { text, userId } = req.body;
+  const { text, userId, username } = req.body;
   const { videoId } = req.params;
 
   try {
     const video = await Video.findOne({ videoId });
-    const newComment = { userId: userId, text: text }; // Assuming user ID is in req.user
+    const newComment = { userId: userId, text: text, username: username };
     video.comments.push(newComment);
     await video.save();
     res.status(201).json(newComment);
@@ -182,7 +182,7 @@ export const deleteComment = async (req, res) => {
     const video = await Video.findOneAndUpdate(
       { videoId },
       { $pull: { comments: { _id: commentId } } },
-      { new: true } // Return the updated document after deletion
+      { new: true } // Return the update
     );
 
     // Check if the video or comment was not found
@@ -201,14 +201,14 @@ export const deleteComment = async (req, res) => {
 // Edit a comment
 export const editComment = async (req, res) => {
   const { videoId, commentId } = req.params;
-  const { text } = req.body; // Assuming the new comment text is sent in the request body
+  const { text } = req.body;
 
   try {
     // Find the video and update the comment text by its _id
     const video = await Video.findOneAndUpdate(
       { videoId, "comments._id": commentId },
       { $set: { "comments.$.text": text } },
-      { new: true } // Return the updated document after editing
+      { new: true } // Return the update
     );
 
     // Check if the video or comment was not found
@@ -222,4 +222,64 @@ export const editComment = async (req, res) => {
     res.status(500).json({ message: "Failed to edit comment." });
   }
 };
+
+// Like a video
+export const likeVideo = async (req, res) => {
+  const { videoId } = req.params;
+  const userId = req.body.userId;
+
+  try {
+    const video = await Video.findOne({ videoId });
+    if (!video) return res.status(404).json({ message: "Video not found." });
+
+    // Check if the user has already liked the video
+    if (video.likedBy.includes(userId)) {
+      return res.status(400).json({ message: "You have already liked this video." });
+    }
+
+    // Check if the user has disliked the video, if so, remove the dislike
+    if (video.dislikedBy.includes(userId)) {
+      video.dislikes -= 1;
+      video.dislikedBy = video.dislikedBy.filter(id => id.toString() !== userId);
+    }
+
+    video.likes += 1; // Increment likes
+    video.likedBy.push(userId); // Add user to likedBy
+    await video.save();
+    res.status(200).json(video);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+// Dislike a video
+export const dislikeVideo = async (req, res) => {
+  const { videoId } = req.params;
+  const userId = req.body.userId; // Get userId from request body
+
+  try {
+    const video = await Video.findOne({ videoId });
+    if (!video) return res.status(404).json({ message: "Video not found." });
+
+    // Check if the user has already disliked the video
+    if (video.dislikedBy.includes(userId)) {
+      return res.status(400).json({ message: "You have already disliked this video." });
+    }
+
+    // Check if the user has liked the video, if so, remove the like
+    if (video.likedBy.includes(userId)) {
+      video.likes -= 1;
+      video.likedBy = video.likedBy.filter(id => id.toString() !== userId);
+    }
+
+    video.dislikes += 1; // Increment dislikes
+    video.dislikedBy.push(userId); // Add user to dislikedBy
+    await video.save();
+    res.status(200).json(video);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 

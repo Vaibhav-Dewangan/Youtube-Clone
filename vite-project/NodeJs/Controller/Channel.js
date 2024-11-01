@@ -1,5 +1,5 @@
 import Channel from "../Models/ChannelModels.js";
-import User from "../Models/UserModel.js"; // Ensure to import the User model
+import User from "../Models/UserModel.js";
 
 // Create Channel
 export const createChannel = async (req, res) => {
@@ -15,23 +15,23 @@ export const createChannel = async (req, res) => {
             description,
             profilePicture,
             bannerImage,
-            owner: userId, // Use userId as the owner
+            owner: userId,
             subscriberCount,
             channelId,
         });
 
-        // Save the new channel to the database
+
         await newChannel.save();
 
         // Check if the user exists before updating
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: 'User not found!' });
 
-        // Update the user collection to add the new channel ID and channel name
+        // Update the user collection with new channel ID and channel name
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { $push: { channels: { mongoDB_id: newChannel._id, channelId: newChannel.channelId, name: channelName } } }, // Push an object with channel ID and name
-            { new: true } // Return the updated user document
+            { new: true } // Return the update
         );
 
         res.status(201).json({ newChannel, updatedUser });
@@ -44,7 +44,7 @@ export const createChannel = async (req, res) => {
 export const getChannelData = async (req, res) => {
     const channelId = req.params.id;
     try {
-        const channel = await Channel.findOne({channelId});
+        const channel = await Channel.findOne({ channelId });
         if (!channel) return res.status(404).json({ message: 'channel not found' });
 
         res.status(200).json({ message: "channel data fetched successfully", channel });

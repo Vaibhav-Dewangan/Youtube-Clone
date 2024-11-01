@@ -63,7 +63,7 @@ export const getAllShorts = async (req, res) => {
 
     return res.status(200).json(shorts);
   } catch (error) {
-   
+
     return res.status(500).json({
       message: 'Error fetching shorts',
       error: error.message,
@@ -76,7 +76,7 @@ export const getShortById = async (req, res) => {
   const shortId = req.params.shortId;
   try {
     // Fetch short from the database
-    const short = await Short.findOne({shortId});
+    const short = await Short.findOne({ shortId });
 
     // Check if short exist
     if (!short) {
@@ -85,7 +85,7 @@ export const getShortById = async (req, res) => {
 
     return res.status(200).json(short);
   } catch (error) {
-   
+
     return res.status(500).json({
       message: 'Error fetching short',
       error: error.message,
@@ -94,20 +94,20 @@ export const getShortById = async (req, res) => {
 };
 
 //Get shorts by channel id
-export const getShortsByChannelId = async(req,res)=>{
+export const getShortsByChannelId = async (req, res) => {
   const channelId = req.params.channelId;
   try {
-    // Fetch all videos from the database
-    const short = await Short.find({channelId});
+    // Fetch all shorts from the database
+    const short = await Short.find({ channelId });
 
-    // Check if videos exist
+    // Check if shorts exist
     if (!short) {
       return res.status(404).json({ message: 'No Short found' });
     }
 
     return res.status(200).json(short);
   } catch (error) {
-   
+
     return res.status(500).json({
       message: 'Error fetching short',
       error: error.message,
@@ -120,7 +120,7 @@ export const getShortsByCategory = async (req, res) => {
   const category = req.params.category;
   try {
     // Fetch all Shorts from the database
-    const Shorts = await Short.find({ category }); 
+    const Shorts = await Short.find({ category });
 
     // Check if Shorts exist
     if (Shorts.length === 0) {

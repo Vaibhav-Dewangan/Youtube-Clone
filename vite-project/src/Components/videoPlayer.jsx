@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import VideoCardPlayer from './VideoCard_player';
 import VideoCard from "./VideoCard";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash, faThumbsUp, faThumbsDown, faShare, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function VideoPlayer() {
-    const { videoId } = useParams();
+    const { videoId: videoId } = useParams();
     const [videoDetails, setVideoDetails] = useState(null);
     const [relatedVideos, setRelatedVideos] = useState([]);
     const [comments, setComments] = useState([]);
@@ -17,7 +18,9 @@ function VideoPlayer() {
     const [showDescription, setShowDescription] = useState(false);
     const [editCommentId, setEditCommentId] = useState(null);
     const [editCommentText, setEditCommentText] = useState("");
+    const [channel, setChannel] = useState(null);
 
+    // fetch videodetails
     const fetchVideoDetails = async () => {
         try {
             const response = await axios.get(`http://localhost:5200/api/videos/${videoId}`);
@@ -34,6 +37,7 @@ function VideoPlayer() {
         fetchVideoDetails();
     }, [videoId]);
 
+    // Fetch related video
     useEffect(() => {
         const fetchRelatedVideos = async () => {
             if (category) {
@@ -50,11 +54,28 @@ function VideoPlayer() {
         fetchRelatedVideos();
     }, [category]);
 
+    // fetch channel data
+    const fetchChannel = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5200/api/channel/data/${videoDetails.channelId}`);
+            setChannel(response.data.channel);
+            setErrorMsg('');
+        } catch (error) {
+            setErrorMsg('Failed to load channel data.');
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchChannel();
+    }, [videoDetails]);
+
+    // handle add comment
     const handleAddComment = async () => {
         if (!newComment.trim()) return;
 
         try {
-            const response = await axios.post(`http://localhost:5200/api/videos/${videoId}/comments`, { userId: "671ea833a6f5c534e65bf919", text: newComment });
+            const response = await axios.post(`http://localhost:5200/api/videos/${videoId}/comments`, { userId: "671ea833a6f5c534e65bf919", username:"T-Series", text: newComment });
             setComments(prevComments => [...prevComments, response.data]);
             fetchVideoDetails();
             setNewComment("");
@@ -64,6 +85,7 @@ function VideoPlayer() {
         }
     };
 
+    // handle delete comment
     const handleDeleteComment = async (commentId) => {
         try {
             await axios.delete(`http://localhost:5200/api/videos/${videoId}/del/comments/${commentId}`);
@@ -74,6 +96,7 @@ function VideoPlayer() {
         }
     };
 
+    // handle edit comment
     const handleEditComment = (commentId, currentText) => {
         setEditCommentId(commentId);
         setEditCommentText(currentText);
@@ -93,15 +116,85 @@ function VideoPlayer() {
         }
     };
 
+    // handle like
+    const handleLike = async () => {
+        try {
+            await axios.post(`http://localhost:5200/api/videos/${videoId}/likes`, { userId: "671ea833a6f5c534e65bf919" }); // Replace with actual userId
+            fetchVideoDetails(); // Refresh video details to get updated like count
+        } catch (error) {
+            console.error("Error liking the video:", error.response?.data.message || error.message);
+        }
+    };
+    
+    //handle dislike
+    const handleDislike = async () => {
+        try {
+            await axios.post(`http://localhost:5200/api/videos/${videoId}/dislikes`, { userId: "671ea833a6f5c534e65bf919" }); // Replace with actual userId
+            fetchVideoDetails(); // Refresh video details to get updated dislike count
+        } catch (error) {
+            console.error("Error disliking the video:", error.response?.data.message || error.message);
+        }
+    };
+
+
     return (
         <div className="flex lg:gap-11 xl:gap-5 flex-col lg:flex-row min-h-screen sm:ml-20 sm:mr-5 md:ml-24">
             <div className="flex-1 bg-white">
                 {videoDetails ? (
                     <div>
-                        <VideoCardPlayer videoId={videoId} videoDetails={videoDetails} channelId={videoDetails.channelId} />
-                        <div className="border-t mt-2">
-                            <button 
-                                onClick={() => setShowDescription(!showDescription)} 
+                        <div>
+                            {/* Videoplayer card */}
+                            <VideoCardPlayer videoId={videoId} videoDetails={videoDetails} channelId={videoDetails.channelId} />
+
+                            {/* like-deslike section */}
+                            <div className="flex justify-stretch sm:justify-end  overflow-x-auto pb-2 px-2 items-center mt-2">
+                                <div className="flex gap-6 lg:gap-14 ">
+                                    <button onClick={handleLike} className={`flex items-center shadow-sm rounded-full bg-slate-200 p-1 px-2 gap-1  hover:text-blue-500 ${videoDetails.likedBy.includes('671ea833a6f5c534e65bf919')? "text-blue-500" : "text-gray-600"} `}>
+                                        <FontAwesomeIcon icon={faThumbsUp} />
+                                        <span>{videoDetails.likes}</span>
+                                    </button>
+                                    <button onClick={handleDislike} className={`flex items-center shadow-sm rounded-full bg-slate-200 p-1 px-2 gap-1 text-gray-600 hover:text-red-600 focus:text-red-500 ${videoDetails.likedBy.includes('671ea833a6f5c534e65bf919')? "text-blue-500" : "text-gray-600"} `}>
+                                        <FontAwesomeIcon icon={faThumbsDown} />
+                                        <span>{videoDetails.dislikes}</span>
+                                    </button>
+                                    <button className="flex items-center shadow-sm rounded-full bg-slate-200 p-1 px-2 gap-1 text-gray-600 hover:text-blue-500">
+                                        <FontAwesomeIcon icon={faShare} />
+                                        <span>Share</span>
+                                    </button>
+                                    <button className="flex items-center shadow-sm rounded-full bg-slate-200 p-1 px-2 gap-1 text-gray-600 hover:text-blue-500">
+                                        <FontAwesomeIcon icon={faHeart} />
+                                        <span>Thanks</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* channel info */}
+                            <div className="flex justify-between items-center bg-slate-100 sm:rounded-md mt-2 p-2 lg:py-5">
+                                <Link to={`/channel/${videoDetails?.channelId}`} className="flex flex-row items-center">
+                                    {channel ? (
+                                        <>
+                                            <img
+                                                className="bg-gray-600 w-10 h-10 object-cover rounded-full mr-2"
+                                                src={channel.profilePicture}
+                                                alt="Channel Logo"
+                                            />
+                                            <p className="text-sm lg:text-lg font-semibold">{videoDetails.channelName}</p>
+                                        </>
+                                    ) : (
+                                        <div className="bg-gray-400 w-9 h-9 rounded-full animate-pulse" />
+                                    )}
+                                </Link>
+
+                                {channel && (
+                                    <button className="bg-black text-white py-1 px-3 rounded-full">Subscribe</button>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* discription */}
+                        <div className="border-b w-full mt-2">
+                            <button
+                                onClick={() => setShowDescription(!showDescription)}
                                 className="ml-2 text-blue-500 text-sm"
                             >
                                 {showDescription ? "Hide Description" : "Show Description"}
@@ -111,15 +204,15 @@ function VideoPlayer() {
                                 <p className="m-2 text-xs text-balance p-3">{videoDetails.description}</p>
                             )}
 
-                            <p className="ml-2 border-b text-gray-600">Channel: {videoDetails.channelName}</p>
                         </div>
                     </div>
                 ) : (
                     <p>Loading video details...</p>
                 )}
-
-                <div className="mt-5 px-2">
-                    <h2 className="text-lg font-semibold">Comments</h2>
+                
+                {/* comment section */}
+                <div className="mt-4 px-2">
+                    <h2 className="text-sm sm:text-lg font-semibold">Comments</h2>
                     {comments.length > 0 ? (
                         comments.map(comment => (
                             <div key={comment._id} className="flex justify-between items-center mt-2 border-b pb-2">
@@ -135,15 +228,21 @@ function VideoPlayer() {
                                         <button onClick={() => setEditCommentId(null)} className="text-gray-500">Cancel</button>
                                     </>
                                 ) : (
-                                    <>
-                                        <p>{comment.text}</p>
-                                        <div className="flex gap-3">
+                                    <>  
+                                        <div className=" w-full flex flex-row justify-between rounded-md px-3 py-1">
+                                        <div className="">
+                                        <p className="text-sm font-semibold">{comment.username}</p>
+                                        <p className="text-base w-full">{comment.text}</p>
+                                        </div>
+                                    
+                                        <div className="flex gap-4">
                                             <button onClick={() => handleEditComment(comment._id, comment.text)} className="text-blue-500">
                                                 <FontAwesomeIcon icon={faPen} />
                                             </button>
                                             <button onClick={() => handleDeleteComment(comment._id)} className="text-red-500">
                                                 <FontAwesomeIcon icon={faTrash} />
                                             </button>
+                                        </div>
                                         </div>
                                     </>
                                 )}
@@ -163,7 +262,7 @@ function VideoPlayer() {
                     {errorMsg && <p className="text-red-500">{errorMsg}</p>}
                 </div>
             </div>
-            
+
             <h3 className="font-semibold text-lg max-sm:mt-5 lg:hidden md:my-10 px-2">Related Videos</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 lg:w-1/4 xl:mx-20">
                 <h3 className="font-semibold text-lg max-lg:hidden max-sm:mt-5 md:mb-2 px-2">Related Videos</h3>

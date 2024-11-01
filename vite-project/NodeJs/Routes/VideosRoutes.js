@@ -1,10 +1,11 @@
 import express from 'express';
-import { addVideo, getAllVideos, getVideoById, getVideosByChannelId, getVideosByCategory, getVideosByTitle, addComment, editComment ,deleteComment  } from '../Controller/Video_controller.js';
+import { addVideo, getAllVideos, dislikeVideo, likeVideo, getVideoById, getVideosByChannelId, getVideosByCategory, getVideosByTitle, addComment, editComment, deleteComment } from '../Controller/Video_controller.js';
+import verifyJWT from '../Middleware/VerifyJWT.js';
 
 const router = express.Router();
 
 // POST route to add a new video
-router.post('/add-video', addVideo);
+router.post('/add-video', verifyJWT, addVideo);
 
 // Route for getting all videos
 router.get('/getAll', getAllVideos);
@@ -22,13 +23,19 @@ router.get('/category/:category', getVideosByCategory);
 router.get('/title/:title', getVideosByTitle);
 
 // Route for add comment
-router.post('/:videoId/comments', addComment)
+router.post('/:videoId/comments', verifyJWT, addComment)
 
 // Route for edit comment 
-router.put('/:videoId/edt/comments/:commentId', editComment )
+router.put('/:videoId/edt/comments/:commentId', verifyJWT, editComment)
 
 // Route for delete comment
-router.delete('/:videoId/del/comments/:commentId', deleteComment )
+router.delete('/:videoId/del/comments/:commentId', verifyJWT, deleteComment)
+
+// Route for like
+router.post('/:videoId/likes', verifyJWT, likeVideo)
+
+// Route for dislike
+router.post('/:videoId/dislikes', verifyJWT, dislikeVideo)
 
 export default router;
 

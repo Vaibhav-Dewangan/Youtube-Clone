@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const channelSchema = new mongoose.Schema({
-    channelId:{
+    channelId: {
         type: String,
         trim: true,
         unique: true, // Ensures uniqueness
@@ -11,11 +11,11 @@ const channelSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true, // Ensures names are unique
-        trim: true, 
+        trim: true,
     },
     description: {
         type: String,
-        default: '', 
+        default: '',
         trim: true,
     },
     profilePicture: {
@@ -28,7 +28,7 @@ const channelSchema = new mongoose.Schema({
     },
     subscriberCount: {
         type: Number,
-        default: 0, // Default to zero 
+        default: 0,
         min: 0, //  can't be negative
     },
     videoCount: {
@@ -51,7 +51,7 @@ const channelSchema = new mongoose.Schema({
     }],
 });
 
-// Middleware to assign unique `channelId` if not provided
+// Middleware to add unique `channelId` if not provided
 channelSchema.pre('save', async function (next) {
     if (!this.channelId) {
         // Generate a unique channelId

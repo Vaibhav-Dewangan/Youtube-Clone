@@ -1,9 +1,9 @@
-// models/Video.js
 import mongoose from 'mongoose';
 
 const shortCommentSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     text: { type: String, required: true },
+    username: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
 });
 
@@ -19,8 +19,8 @@ const shortSchema = new mongoose.Schema({
     dislikes: { type: Number, default: 0 },
     uploadDate: { type: Date, required: true },
     comments: { type: [shortCommentSchema], default: [] },
-    category: {type: String, required: true},
-    channelName:{type: String ,required: true},
+    category: { type: String, required: true },
+    channelName: { type: String, required: true },
 });
 
 const Short = mongoose.model('Short', shortSchema);

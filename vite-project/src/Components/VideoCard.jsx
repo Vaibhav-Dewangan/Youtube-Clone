@@ -106,9 +106,9 @@ function VideoCard({ videoId, videoDetails, channelId }) {
                     </div>
 
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col ">
                         <p className="text-sm">{videoDetails.title}</p>
-                        <div className="flex space-x-1 text-xs text-gray-600">
+                        <div className="flex space-x-1 text-xs text-gray-600 text-nowrap">
                             <Link to={`/channel/${channelId}`}><p className="text-blue-500">{channel ? channel.channelName : 'Loading...'}</p></Link>
                             <span>•</span>
                             <span>{videoDetails.views} views</span>

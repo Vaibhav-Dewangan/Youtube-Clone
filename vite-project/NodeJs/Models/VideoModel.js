@@ -1,8 +1,8 @@
-// models/Video.js
 import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    username: { type: String, required: true },
     text: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
 });
@@ -19,8 +19,10 @@ const videoSchema = new mongoose.Schema({
     dislikes: { type: Number, default: 0 },
     uploadDate: { type: Date, required: true },
     comments: { type: [commentSchema], default: [] },
-    category: {type: String, required: true},
-    channelName:{type: String ,required: true},
+    category: { type: String, required: true },
+    channelName: { type: String, required: true },
+    likedBy: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] }, // Track users who liked the video
+    dislikedBy: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] } // Track users who disliked the video
 });
 
 const Video = mongoose.model('Video', videoSchema);
