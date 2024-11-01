@@ -30,7 +30,6 @@ function VideoContents() {
             const response = await axios.get(url_to_getAll_Videos);
             const shuffledVideos = shuffleVideos(response.data); // Shuffle the fetched videos
             setVideos(shuffledVideos);
-            console.log(response.data);
             setErrorMsg(''); // Clear any previous error messages
         } catch (error) {
             setErrorMsg('Failed to load videos.');
@@ -45,7 +44,6 @@ function VideoContents() {
             const response = await axios.get(url_to_getAll_Shorts);
             const shuffledShorts = shuffleShorts(response.data);
             setShorts(shuffledShorts);
-            console.log(response.data);
             setErrorMsg('');
         } catch (error) {
             setErrorMsg('Failed to load videos.');

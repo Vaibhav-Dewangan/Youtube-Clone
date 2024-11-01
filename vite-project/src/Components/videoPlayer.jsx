@@ -94,7 +94,10 @@ function VideoPlayer() {
     };
 
     useEffect(() => {
-        fetchChannel();
+        if (videoDetails?.channelId) {
+            fetchChannel();
+        }
+
     }, [videoDetails]);
 
     // handle add comment
@@ -121,11 +124,11 @@ function VideoPlayer() {
         if (isLogin) {
             try {
                 await axios.delete(`http://localhost:5200/api/videos/${videoId}/del/comments/${commentId}`,
-                    { data: { userId: userData?._id }});
+                    { data: { userId: userData?._id } });
                 fetchVideoDetails();
             } catch (error) {
                 console.error("Error deleting comment:", error);
-                setErrorMsg(error.message.includes('403')? 'Invalid user' : error.message);
+                setErrorMsg(error.message.includes('403') ? 'Invalid user' : error.message);
             }
         } else {
             setErrorMsg('Please login !! ')
@@ -143,13 +146,13 @@ function VideoPlayer() {
             if (!editCommentText.trim()) return;
 
             try {
-                await axios.put(`http://localhost:5200/api/videos/${videoId}/edt/comments/${editCommentId}`, { text: editCommentText, userId: userData?._id  });
+                await axios.put(`http://localhost:5200/api/videos/${videoId}/edt/comments/${editCommentId}`, { text: editCommentText, userId: userData?._id });
                 setEditCommentId(null);
                 setEditCommentText("");
                 fetchVideoDetails();
             } catch (error) {
                 console.error("Error updating comment:", error);
-                setErrorMsg(error.message.includes('403')? 'Invalid user' : error.message);
+                setErrorMsg(error.message.includes('403') ? 'Invalid user' : error.message);
             }
         } else {
             setErrorMsg('Please login !! ')
@@ -265,37 +268,55 @@ function VideoPlayer() {
                         comments.map(comment => (
                             <div key={comment._id} className="flex justify-between items-center mt-2 border-b pb-2">
                                 {editCommentId === comment._id ? (
-                                    <>
-                                        <input
-                                            type="text"
-                                            className="border rounded p-1"
-                                            value={editCommentText}
-                                            onChange={(e) => setEditCommentText(e.target.value)}
-                                        />
-                                        <button onClick={handleUpdateComment} className="text-green-500">Update</button>
-                                        <button onClick={() => setEditCommentId(null)} className="text-gray-500">Cancel</button>
-                                    </>
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex flex-row justify-between ">
+                                            <input
+                                                type="text"
+                                                className="border rounded p-1"
+                                                value={editCommentText}
+                                                onChange={(e) => setEditCommentText(e.target.value)}
+                                            />
+                                            <div className=" flex gap-4">
+                                                <button onClick={handleUpdateComment} className="text-green-500">Update</button>
+                                                <button onClick={() => setEditCommentId(null)} className="text-gray-500">Cancel</button>
+                                            </div>
+                                        </div>
+
+                                        {/* handle error */}
+                                        <div>
+                                            {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+                                        </div>
+                                    </div>
                                 ) : (
                                     <>
-                                        <div className=" w-full flex flex-row justify-between rounded-md px-3 py-1">
-                                           
-                                            <div className=" flex flex-row gap-4 items-center">
-                                                <img className="w-9 h-9 rounded-full" src={comment.userAvatar} alt="avatar" />
-                                                <div>
-                                                <p className="text-sm font-semibold">{comment.username}</p>
-                                                <p className="text-base w-full ">{comment.text}</p>
+
+                                        <div className="flex flex-col w-full">
+                                            <div className=" w-full flex flex-row justify-between rounded-md px-3 py-1">
+
+                                                <div className=" flex flex-row gap-4 items-center">
+                                                    <img className="w-9 h-9 rounded-full" src={comment.userAvatar} alt="avatar" />
+                                                    <div>
+                                                        <p className="text-sm font-semibold">{comment.username}</p>
+                                                        <p className="text-base w-full ">{comment.text}</p>
+                                                    </div>
+
                                                 </div>
-                                                
+
+                                                <div className="flex gap-4">
+                                                    <button onClick={() => handleEditComment(comment._id, comment.text)} className="text-blue-500">
+                                                        <FontAwesomeIcon icon={faPen} />
+                                                    </button>
+                                                    <button onClick={() => handleDeleteComment(comment._id)} className="text-red-500">
+                                                        <FontAwesomeIcon icon={faTrash} />
+                                                    </button>
+                                                </div>
                                             </div>
 
-                                            <div className="flex gap-4">
-                                                <button onClick={() => handleEditComment(comment._id, comment.text)} className="text-blue-500">
-                                                    <FontAwesomeIcon icon={faPen} />
-                                                </button>
-                                                <button onClick={() => handleDeleteComment(comment._id)} className="text-red-500">
-                                                    <FontAwesomeIcon icon={faTrash} />
-                                                </button>
+                                            {/* handle error */}
+                                            <div>
+                                                {errorMsg && <p className="text-red-500">{errorMsg}</p>}
                                             </div>
+
                                         </div>
                                     </>
                                 )}
@@ -312,17 +333,17 @@ function VideoPlayer() {
                         placeholder="Add a comment..."
                     />
                     <button onClick={handleAddComment} className="mt-2 bg-blue-500 text-white px-4 py-1 md:py-2 rounded">Add Comment</button>
-                    {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+
                 </div>
             </div>
-            
+
             {/* Related video section */}
             <h3 className="font-semibold text-lg max-sm:mt-5 lg:hidden md:my-10 px-2">Related Videos</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 lg:w-1/4 xl:mx-20">
                 <h3 className="font-semibold text-lg max-lg:hidden max-sm:mt-5 md:mb-2 px-2">Related Videos</h3>
                 {relatedVideos.map((video) => (
                     <VideoCard
-                        key={video.videoId}
+                        key={video._Id}
                         videoId={video.videoId}
                         videoDetails={video}
                         channelId={video.channelId}
