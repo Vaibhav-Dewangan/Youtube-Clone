@@ -7,6 +7,7 @@ import videosRoutes from './Routes/VideosRoutes.js';
 import shortRoutes from './Routes/ShortRoutes.js';
 import verifyJWT from "./Middleware/VerifyJWT.js";
 
+// MongoDB connection
 mongoose.connect("mongodb://localhost:27017/Youtube");
 const db = mongoose.connection;
 
@@ -28,22 +29,22 @@ app.use(express.json());
 app.use(cors());
 
 // Logging Middleware
-app.use((req, res, next)=>{
+app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
 
 // Use Routes
-app.use('/api/user',userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/channel', channelRoutes);
 app.use('/api/videos', videosRoutes);
-app.use('/api/shorts', shortRoutes );
+app.use('/api/shorts', shortRoutes);
 
 
 
 // Error Handeling middleware for catching unknown routes
-app.use((req, res)=>{
-    res.status(404).json({message:"Route not found"});
+app.use((req, res) => {
+    res.status(404).json({ message: "Route not found" });
 });
 
 
