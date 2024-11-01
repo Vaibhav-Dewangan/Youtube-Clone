@@ -159,12 +159,12 @@ export const getVideosByTitle = async (req, res) => {
 
 // Add a comment
 export const addComment = async (req, res) => {
-  const { text, userId, username } = req.body;
+  const { text, userId, username, userAvatar } = req.body;
   const { videoId } = req.params;
 
   try {
     const video = await Video.findOne({ videoId });
-    const newComment = { userId: userId, text: text, username: username };
+    const newComment = { userId: userId, text: text, username: username, userAvatar: userAvatar };
     video.comments.push(newComment);
     await video.save();
     res.status(201).json(newComment);
@@ -176,20 +176,27 @@ export const addComment = async (req, res) => {
 // Delete a comment
 export const deleteComment = async (req, res) => {
   const { videoId, commentId } = req.params;
+  const { userId } = req.body; 
 
+  console.log("Received userId:", userId);
+  console.log("Received videoId:", videoId, "and commentId:", commentId);
+  
   try {
-    // Find the video by videoId and pull the comment by its _id
-    const video = await Video.findOneAndUpdate(
-      { videoId },
-      { $pull: { comments: { _id: commentId } } },
-      { new: true } // Return the update
-    );
+    const video = await Video.findOne({ videoId });
+    const comment = video.comments.id(commentId);
 
-    // Check if the video or comment was not found
-    if (!video) {
-      return res.status(404).json({ message: "Video not found or comment already deleted." });
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found." });
+    }
+    
+    // Check if the user is the author of the comment
+    if (comment.userId.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized to delete this comment." });
     }
 
+    video.comments.pull(commentId); // Remove the comment
+    await video.save();
+    
     res.status(200).json({ message: "Comment deleted successfully." });
   } catch (error) {
     console.error("Error deleting comment:", error);
@@ -197,31 +204,35 @@ export const deleteComment = async (req, res) => {
   }
 };
 
-
 // Edit a comment
 export const editComment = async (req, res) => {
   const { videoId, commentId } = req.params;
-  const { text } = req.body;
+  const { text, userId } = req.body; 
 
   try {
-    // Find the video and update the comment text by its _id
-    const video = await Video.findOneAndUpdate(
-      { videoId, "comments._id": commentId },
-      { $set: { "comments.$.text": text } },
-      { new: true } // Return the update
-    );
+    const video = await Video.findOne({ videoId });
+    const comment = video.comments.id(commentId);
 
-    // Check if the video or comment was not found
-    if (!video) {
-      return res.status(404).json({ message: "Video not found or comment not found." });
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found." });
     }
 
-    res.status(200).json({ message: "Comment edited successfully.", video });
+    // Check if the user is the author of the comment
+    if (comment.userId.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized to edit this comment." });
+    }
+
+    // Update the comment text
+    comment.text = text;
+    await video.save();
+    
+    res.status(200).json({ message: "Comment edited successfully.", comment });
   } catch (error) {
     console.error("Error editing comment:", error);
     res.status(500).json({ message: "Failed to edit comment." });
   }
 };
+
 
 // Like a video
 export const likeVideo = async (req, res) => {

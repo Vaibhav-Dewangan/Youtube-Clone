@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer';

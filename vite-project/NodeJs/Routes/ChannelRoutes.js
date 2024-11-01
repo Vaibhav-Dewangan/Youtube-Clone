@@ -5,7 +5,7 @@ import verifyJWT from '../Middleware/VerifyJWT.js';
 const router = express.Router();
 
 // Create channel
-router.post('/create', verifyJWT, createChannel);
+router.post('/create', createChannel);
 
 // Get channel Data
 router.get('/data/:id', getChannelData);

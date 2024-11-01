@@ -23,19 +23,19 @@ router.get('/category/:category', getVideosByCategory);
 router.get('/title/:title', getVideosByTitle);
 
 // Route for add comment
-router.post('/:videoId/comments', verifyJWT, addComment)
+router.post('/:videoId/comments', addComment)
 
 // Route for edit comment 
-router.put('/:videoId/edt/comments/:commentId', verifyJWT, editComment)
+router.put('/:videoId/edt/comments/:commentId', editComment)
 
 // Route for delete comment
-router.delete('/:videoId/del/comments/:commentId', verifyJWT, deleteComment)
+router.delete('/:videoId/del/comments/:commentId', deleteComment)
 
 // Route for like
-router.post('/:videoId/likes', verifyJWT, likeVideo)
+router.post('/:videoId/likes', likeVideo)
 
 // Route for dislike
-router.post('/:videoId/dislikes', verifyJWT, dislikeVideo)
+router.post('/:videoId/dislikes', dislikeVideo)
 
 export default router;
 
