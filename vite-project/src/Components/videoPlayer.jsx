@@ -186,7 +186,13 @@ function VideoPlayer() {
             alert('Please login !! ')
         }
     };
-
+    
+    //handle clear error message
+    if (errorMsg != '') {
+        setInterval(() => {
+            setErrorMsg("")
+        }, 3000);
+    }
 
     return (
         <div className="flex lg:gap-11 xl:gap-5 flex-col lg:flex-row min-h-screen sm:ml-20 sm:mr-5 md:ml-24">
@@ -319,11 +325,6 @@ function VideoPlayer() {
                                                         <FontAwesomeIcon icon={faTrash} />
                                                     </button>
                                                 </div>
-                                            </div>
-
-                                            {/* handle error */}
-                                            <div>
-                                                {errorMsg && <p className="text-red-500">{errorMsg}</p>}
                                             </div>
 
                                         </div>

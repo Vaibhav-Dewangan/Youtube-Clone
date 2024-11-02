@@ -98,7 +98,7 @@ function VideoContents() {
                 <FilterButtons />
             </div>
 
-            <div className=" min-h-screen sm:ml-20 box-content  sm:mr-5 md:ml-24 scrollbar-thin">
+            <div className=" min-h-screen sm:ml-20 box-content scroll-smooth  sm:mr-5 md:ml-24 scrollbar-thin">
                 {/* Sponsored Videos container */}
                 <div className="Sponsored_Videos_Container grid gap-5 sm:gap-6 grid-cols-1 grid-rows-1 sm:grid-cols-2 sm:grid-rows-2 lg:grid-cols-3 xl:grid-cols-4">
                     {videoSection_top ? (
