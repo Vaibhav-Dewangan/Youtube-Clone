@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHouse, faPlus } from '@fortawesome/free-solid-svg-icons';
 import subscriptionImg from '../Images/subscription-icon.webp';
 import shortsIcon from '../Images/shorts-icon.webp';
+import { useAuth } from "../Context/UserAuth";
 
 function BottomNav() {
+    const {isBottomNav} = useAuth();
 
     return (
         <>
             {/* Bottom navigation bar */}
-            <div className="bottomNav fixed bottom-0 z-50 bg-white shadow-md sm:hidden h-14 w-screen px-4 py-3 border-t ">
+            <div className={`bottomNav fixed bottom-0 z-50 bg-white shadow-md sm:hidden h-14 w-screen px-4 py-3 border-t ${isBottomNav == false ? 'hidden' : 'block'} `}>
 
                 <ul className="bottomNavTab flex  flex-row justify-evenly  align-middle items-center gap-6  text-lg ">
 

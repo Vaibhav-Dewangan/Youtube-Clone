@@ -10,7 +10,7 @@ import CreateChannel from "./CreateChannel.jsx";
 
 
 function UserMenuHeader(props) {
-    const { isLogin, logout } = useAuth();
+    const { isLogin, logout, setIsBottomNav } = useAuth();
     const loginEmail = localStorage.getItem('email');
     const url = `http://localhost:5200/api/user/${loginEmail}`;
     const [data, setData] = useState(null);
@@ -58,6 +58,12 @@ function UserMenuHeader(props) {
         }
     }, [isLogin, data]);
 
+    // handle bottomNav
+    function handleBottomNavAndModal() {
+        setModalOpen(true)
+        setIsBottomNav(false);
+    };
+
     // Handle logout
     function handleLogout() {
         logout();
@@ -97,7 +103,7 @@ function UserMenuHeader(props) {
                                         <p className="max-sm:text-xs">{userData.email}</p>
                                         {userData.channels.length === 0 ? (
                                             <button
-                                                onClick={() => setModalOpen(true)}
+                                                onClick={handleBottomNavAndModal}
                                                 className="rounded-md hover:text-blue-600 max-sm:text-xs"
                                             >
                                                 Create Channel

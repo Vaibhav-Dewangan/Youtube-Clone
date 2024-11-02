@@ -263,6 +263,15 @@ function VideoPlayer() {
 
                 {/* comment section */}
                 <div className="mt-4 px-2">
+                    <div className="flex flex-row my-2 gap-2  ">
+                        <textarea
+                            className="w-full  border sm:p-1 px-4 rounded-xl   "
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            placeholder="Add a comment..."
+                        />
+                        <button onClick={handleAddComment} className=" bg-blue-500 text-white px-3 sm:p-1 h-10  text-nowrap  rounded-xl">Add <span className="max-sm:hidden">Comment</span> </button>
+                    </div>
                     <h2 className="text-sm sm:text-lg font-semibold">Comments</h2>
                     {comments.length > 0 ? (
                         comments.map(comment => (
@@ -325,14 +334,6 @@ function VideoPlayer() {
                     ) : (
                         <p>No comments yet.</p>
                     )}
-                    <textarea
-                        className="w-full mt-2 border rounded p-2"
-                        rows="3"
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        placeholder="Add a comment..."
-                    />
-                    <button onClick={handleAddComment} className="mt-2 bg-blue-500 text-white px-4 py-1 md:py-2 rounded">Add Comment</button>
 
                 </div>
             </div>

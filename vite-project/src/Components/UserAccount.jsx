@@ -9,7 +9,7 @@ import CreateChannel from "./CreateChannel.jsx";
 import VideoCard from "./VideoCard.jsx";
 
 function UserAccount() {
-    const { isLogin, logout } = useAuth();
+    const { isLogin, logout, setIsBottomNav } = useAuth();
     const loginEmail = localStorage.getItem('email');
     const url = `http://localhost:5200/api/user/${loginEmail}`;
     const [data, setData] = useState(null);
@@ -119,6 +119,11 @@ function UserAccount() {
         );
     };
 
+    function handleCreateChannel(){
+        setModalOpen(true);
+        setIsBottomNav(false);
+    };
+
     return (
         <div className="UserAccount min-h-screen sm:ml-20 sm:mr-5 md:ml-24">
             {!isLogin ? (
@@ -150,7 +155,7 @@ function UserAccount() {
                                         <p>{userData.email}</p>
                                         {userData.channels.length === 0 ? (
                                             <button
-                                                onClick={() => setModalOpen(true)}
+                                                onClick={handleCreateChannel}
                                                 className="rounded-md hover:text-blue-600"
                                             >
                                                 Create Channel

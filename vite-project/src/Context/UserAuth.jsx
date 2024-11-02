@@ -68,8 +68,11 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // BottomNav
+    const [isBottomNav, setIsBottomNav] = useState(true);
+
     return (
-        <AuthContext.Provider value={{ isLogin, login, logout }}>
+        <AuthContext.Provider value={{ isLogin, login, logout, isBottomNav, setIsBottomNav }}>
             {children}
         </AuthContext.Provider>
     );

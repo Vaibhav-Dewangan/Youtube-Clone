@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../Context/UserAuth';
 
 const CreateChannel = ({ isOpen, onClose, userId }) => {
+    const { setIsBottomNav } = useAuth();
     const [formData, setFormData] = useState({
         channelName: '',
         description: '',
@@ -21,6 +23,11 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
         if (name === 'profilePicture') {
             setImagePreview(value);
         }
+    };
+
+    // handle bottomNav
+    function handleBottomNav() {
+        setIsBottomNav(true);
     };
 
     // Handle form submission
@@ -51,6 +58,7 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
             setFormData({ channelName: '', description: '', profilePicture: '', bannerImage: '' });
             setImagePreview(null);
             onClose(); // Close modal
+            handleBottomNav();
         } catch (err) {
             // Error handling
             setError(err.response?.data?.message || 'Something went wrong.');
@@ -66,9 +74,11 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
 
     if (!isOpen) return null; // Don't render if not open
 
+
+
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
+            <div className="bg-white rounded-lg p-6 w-full  max-w-xl mx-4">
                 <h2 className="text-xl font-semibold text-center mb-4">Create Your Channel</h2>
 
                 {/* Image Preview Section */}
@@ -140,7 +150,7 @@ const CreateChannel = ({ isOpen, onClose, userId }) => {
                     <div className="flex justify-end gap-2 mt-4">
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={() => { onClose(); handleBottomNav() }}
                             className="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
                         >
                             Cancel
