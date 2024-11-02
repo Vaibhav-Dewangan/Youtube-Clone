@@ -60,17 +60,16 @@ To set up the YouTube Clone project locally, follow these steps:
 
 - Clone the Git Repository:
 - Run the command:
-Install Dependencies:
-Backend (NodeJs):
+### Install Dependencies and Run:
+#### Backend (NodeJs):
 - Navigate to the NodeJs folder and run:
 - npm install
-rontend (Vite project):
+- npm start
+#### frontend (Vite project):
 - Navigate to the Vite-project folder and run:
 - npm install
-Run the Applications:
-- Start the backend (Node.js):
-- npm start
-Start the frontend (Vite project):
 - npm run dev
+
+
 
 
