@@ -14,7 +14,7 @@ This **YouTube Clone** project is my capstone, built using the **MERN Stack** (M
 2. **User Authentication**:
    - Added a registration and login system, where users can sign up with a **username, email, and password**.
    - Secured the app with **JWT-based authentication**.
-   - Before signing in, users see a "Sign In" button; once logged in, their name appears in the header, and they can access the main content.
+   - Before signing in, users see a "Sign In" button; once logged in, their name appears in the header.
 
 3. **Search and Filter Functionality**:
    - Implemented a dynamic search bar in the header that filters videos by title as users type.
@@ -56,5 +56,21 @@ This **YouTube Clone** project is my capstone, built using the **MERN Stack** (M
 
 ## 🚀 Getting Started
 
+To set up the YouTube Clone project locally, follow these steps:
+
+- Clone the Git Repository:
+- Run the command:
+Install Dependencies:
+Backend (NodeJs):
+- Navigate to the NodeJs folder and run:
+- npm install
+rontend (Vite project):
+- Navigate to the Vite-project folder and run:
+- npm install
+Run the Applications:
+- Start the backend (Node.js):
+- npm start
+Start the frontend (Vite project):
+- npm run dev
 
 
