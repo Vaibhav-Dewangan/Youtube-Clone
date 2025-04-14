@@ -78,7 +78,7 @@ const ChannelPage = () => {
     return (
         <div className="min-h-screen bg-gray-50 sm:ml-20 sm:mr-5 md:ml-24">
             {/* Channel Banner */}
-            <div className="bg-cover bg-center lg:rounded-3xl h-36 sm:h-48 md:h-64" style={{ backgroundImage: `url(${channel?.bannerImage})` }}></div>
+            <div className="bg-cover bg-center lg:rounded-3xl h-36 sm:h-48 md:h-52 lg:h-64" style={{ backgroundImage: `url(${channel?.bannerImage})` }}></div>
 
             {/* Profile Section */}
             <div className="bg-white p-2 sm:p-4 shadow-sm">

@@ -33,7 +33,7 @@ function LoginResister() {
             const url = newUser ? 'http://localhost:5200/api/user/register' : 'http://localhost:5200/api/user/login';
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData) // Send form data as JSON
             });
 

@@ -4,7 +4,6 @@ const channelSchema = new mongoose.Schema({
     channelId: {
         type: String,
         trim: true,
-        unique: true, // Ensures uniqueness
         sparse: true,
     },
     channelName: {
