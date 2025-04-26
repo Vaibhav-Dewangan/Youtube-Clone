@@ -1,0 +1,143 @@
+[{
+  "_id": {
+    "$oid": "680cf155c401bd088c626b68"
+  },
+  "username": "vaibhavdewangan",
+  "email": "vaibhav@gmail.com",
+  "password": "$2a$10$tgxYUmv3jRP1ZtxlArEtkOgm5faWq6QzhpEvc/msCd5x1rfrNP/X6",
+  "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVrNIrc_GMNFCWvfIVx-5-1jI0YMf-3a6yyg&s",
+  "channels": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680cf1cbc401bd088c626b72"
+  },
+  "username": "ApnaCollegeOfficial",
+  "email": "apnacollege@gmail.com",
+  "password": "$2a$10$kPeG8iPcU1UHySB1a7E9L.NHnqdFwwvKNXHTNbf95/gUr.HKlJldq",
+  "avatar": "https://yt3.googleusercontent.com/FEcjRtez5od8UowDo6tTt9WlE-MrIFEmcwPMTORmK9Swk6KCklOmA3xfIG9WuLWfNYfNThQE=s160-c-k-c0x00ffffff-no-rj",
+  "channels": [
+    {
+      "mongoDB_id": {
+        "$oid": "680cf22ac401bd088c626b91"
+      },
+      "channelId": "39100239302550",
+      "name": "Apna College",
+      "_id": {
+        "$oid": "680cf22ac401bd088c626b95"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680cf8a0c401bd088c626cbb"
+  },
+  "username": "InternshalaOfficial",
+  "email": "internshala@gmail.com",
+  "password": "$2a$10$WBRHt9zGYfJlxUzAPXZa7.MxESjeZIjHCejTdpq4lT60ysIko67uO",
+  "avatar": "https://yt3.googleusercontent.com/foVCTywFAyUZG05GpiGEAJhgOv7UFcgm-ymCTAxXg85tMvc506VvSUo4xsbsAavj1DrTbaqTW10=s160-c-k-c0x00ffffff-no-rj",
+  "channels": [
+    {
+      "mongoDB_id": {
+        "$oid": "680cf8edc401bd088c626d0b"
+      },
+      "channelId": "81681249635767",
+      "name": "Internshala",
+      "_id": {
+        "$oid": "680cf8edc401bd088c626d0f"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680d0187c401bd088c626f1b"
+  },
+  "username": "NoCopyrightSounds",
+  "email": "ncs@gmail.com",
+  "password": "$2a$10$AahbxNnyuNefziqeTw9rvuAQSzli1Xms6Q/23jz0lxXXzIGUxaQIO",
+  "avatar": "https://yt3.googleusercontent.com/opGwWu2ScRBy-OA81LIzKwSatxlVKjjNyAdt4fWh4LoLzldx05Sdf3OGQz0Fz78ziZ9RLP4=s160-c-k-c0x00ffffff-no-rj",
+  "channels": [
+    {
+      "mongoDB_id": {
+        "$oid": "680d01afc401bd088c626f3f"
+      },
+      "channelId": "79667144964484",
+      "name": "NCS",
+      "_id": {
+        "$oid": "680d01afc401bd088c626f43"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680d14e9c401bd088c627340"
+  },
+  "username": "TechBurner",
+  "email": "techburner@gmail.com",
+  "password": "$2a$10$9Ukp.UdR.641BgS2M3s/iOmAFYpBBtwbJ8BerL5mnFbiOhkQt4o/S",
+  "avatar": "https://yt3.googleusercontent.com/4l8EVYasVxYT2gjYKzp2ls2_t7jvyEMhraMC-OVZuz0Cu_KrA0l678sCfY1vxGSL7SHE3zZYCA=s160-c-k-c0x00ffffff-no-rj",
+  "channels": [
+    {
+      "mongoDB_id": {
+        "$oid": "680d1523c401bd088c6273c6"
+      },
+      "channelId": "74437697436819",
+      "name": "Tech Burner",
+      "_id": {
+        "$oid": "680d1523c401bd088c6273ca"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680d17b8c401bd088c6274c0"
+  },
+  "username": "timesofindia",
+  "email": "timesofindia@gmail.com",
+  "password": "$2a$10$obs3tErVVCPuZJewdTwJsOYxi0X1KNi5Hh9YUfp3PG9Z8ldyHqsFW",
+  "avatar": "https://yt3.googleusercontent.com/cJ4vDypJDnXZhV5MxHZ3-f7nr1h9zEv4Zh7mlMlNe0vDO2R82gKZXnf57RVUUiDXfE1e554ArA=s160-c-k-c0x00ffffff-no-rj",
+  "channels": [
+    {
+      "mongoDB_id": {
+        "$oid": "680d17e6c401bd088c62755c"
+      },
+      "channelId": "17315439562338",
+      "name": "Times of India",
+      "_id": {
+        "$oid": "680d17e6c401bd088c627560"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680d1c72c401bd088c6277e2"
+  },
+  "username": "dbillions",
+  "email": "dbillions@gmail.com",
+  "password": "$2a$10$t7y2Es2VR.Vhs0zYGNxqy.mTMyMTSIlr//bzM6xtqmT.Ipt0IcL16",
+  "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_lWUWOvwHYqQqkJH0JUb-IkToxPykv50sQMFpfAtSBFc94=s160-c-k-c0x00ffffff-no-rj",
+  "channels": [
+    {
+      "mongoDB_id": {
+        "$oid": "680d1cbac401bd088c627897"
+      },
+      "channelId": "80309681561478",
+      "name": "D Billions",
+      "_id": {
+        "$oid": "680d1cbac401bd088c62789b"
+      }
+    }
+  ],
+  "__v": 0
+}]
